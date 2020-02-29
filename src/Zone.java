@@ -50,9 +50,7 @@ public class Zone {
     public ArrayList<Animal> getAnimal(){
         return this.animal;
     }
-    public String getZoneCode() {
-        return this.zoneCode;
-    }
+    public String getZoneCode() { return this.zoneCode; }
     public String getSafetyRating(){
         return this.safetyRating;
     }

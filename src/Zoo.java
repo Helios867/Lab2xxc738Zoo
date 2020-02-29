@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,13 +30,15 @@ public class Zoo {
      *
      */
     public Zone loadZones(String zoneFile) throws FileNotFoundException {
-        Scanner scan = new Scanner(new File("animalData/zones.csv"));
+        Scanner scan = new Scanner(new File(zoneFile));
 
         while(scan.hasNextLine()){
             String currentLine = scan.nextLine();
             String zoneInfo[] = (currentLine.split(","));
             Zone zone = new Zone(zoneInfo[0], zoneInfo[1], zoneInfo[2]);
+            this.getZone();
             return zone;
+
         }
         scan.close();
         return null;
@@ -44,12 +48,18 @@ public class Zoo {
      *
      */
     public Animal loadAnimals(String animalFile) throws FileNotFoundException{
-        Scanner scan = new Scanner(new File("animalData/animals.csv"));
+        Scanner scan = new Scanner(new File(animalFile));
 
         while(scan.hasNextLine()){
             String currentLine = scan.nextLine();
-            String animalinfo[] = (currentLine.split(","));
-            Animal animal = new Animal(animalinfo[0], animalinfo[1], animalinfo[2], animalinfo[3]);
+            String animalInfo[] = (currentLine.split(","));
+            Animal animal = new Animal(animalInfo[0], animalInfo[1], animalInfo[2], animalInfo[3]);
+            for(int i=0; i<zone.size(); i++){
+                if(animalInfo[3]==zone.get(i).getZoneCode()){
+                    zone.get(i).addAnimal(animal);
+                    break;
+                }
+            }
             return animal;
         }
         scan.close();
@@ -58,22 +68,33 @@ public class Zoo {
 
     /**
      *
-     * @param relocateAnimalName
-     * @param relocateZoneCode
+     * @param animalName
+     * @param zoneCode
      *
      * take the zone you want to move to then access its collection and add what you need to it
      * then remove the object from its first collection (zone)
      */
-    public void relocate(String relocateAnimalName, String relocateZoneCode) throws FileNotFoundException {
-        ArrayList<Zone> tempZone = new ArrayList<Zone>();
-        ArrayList<Animal> tempAnimal = new ArrayList<Animal>();
-        loadZones("animalData/zones.csv");
-        loadAnimals("animalData/animals.csv");
-        for(int i=0; i<tempZone.size(); i++){
-            for(int j=0; j<tempAnimal.size(); j++){
-
+    public void relocate(String animalName, String zoneCode){
+        Animal found = null;
+        int aniZone = 0;
+        int newZone = 0;
+        for(int i = 0; i < this.zone.size(); i++){
+            Zone temp = this.zone.get(i);
+            if(temp.getZoneCode() == zoneCode){
+                newZone = i;
             }
-
+            for(int j = 0; j < temp.getAnimal().size(); j++){
+                Animal ani = temp.getAnimal().get(j);
+                if(ani.getAnimalName() == animalName){
+                    found = ani;
+                    aniZone = i;
+                    break;
+                }
+            }
+        }
+        if(found != null){
+            this.zone.get(aniZone).removeAnimal(found);
+            this.zone.get(newZone).addAnimal(found);
         }
     }
 
@@ -82,9 +103,15 @@ public class Zoo {
      * then print them to the file with the correct format
      * can erase what was there before the save
      */
-    public void save(){
+    public void save() throws IOException {
+        File saveZoneFile = new File("animalData/zones.csv");
+        File saveAnimalFile = new File("animalData/animals.csv");
         for(int i=0; i<zone.size(); i++){
+            FileWriter fwz = new FileWriter(saveZoneFile, false);
 
+            for(int j=0; j<zone.get(i).getAnimal().size(); j++){
+                FileWriter fwa = new FileWriter(saveAnimalFile, false);
+            }
         }
 
     }
