@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Zoo {
 
     private String zooName;
-    private ArrayList<Zone> zone;
+    private ArrayList<Zone> zone = new ArrayList<Zone>();
 
     /**
      *

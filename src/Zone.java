@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Zone {
 
     private String zoneName;
-    private ArrayList<Animal> animal;
+    private ArrayList<Animal> animal = new ArrayList<Animal>();
     private String zoneCode;
     private String safetyRating;
 
