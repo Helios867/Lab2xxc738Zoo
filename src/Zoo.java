@@ -29,41 +29,41 @@ public class Zoo {
     /**
      *
      */
-    public Zone loadZones(String zoneFile) throws FileNotFoundException {
+    public void loadZones(String zoneFile) throws FileNotFoundException {
         Scanner scan = new Scanner(new File(zoneFile));
 
         while(scan.hasNextLine()){
             String currentLine = scan.nextLine();
+            //System.out.print(currentLine);
             String zoneInfo[] = (currentLine.split(","));
-            Zone zone = new Zone(zoneInfo[0], zoneInfo[1], zoneInfo[2]);
-            this.getZone();
-            return zone;
-
+            Zone zoneInfoArr = new Zone(zoneInfo[0], zoneInfo[1], zoneInfo[2]);
+            this.getZone().add(zoneInfoArr);
         }
         scan.close();
-        return null;
     }
 
     /**
      *
      */
-    public Animal loadAnimals(String animalFile) throws FileNotFoundException{
+    public void loadAnimals(String animalFile) throws FileNotFoundException{
         Scanner scan = new Scanner(new File(animalFile));
 
-        while(scan.hasNextLine()){
+        while(scan.hasNextLine()) {
+            //System.out.print("test2");
             String currentLine = scan.nextLine();
+            //System.out.println(currentLine);
             String animalInfo[] = (currentLine.split(","));
-            Animal animal = new Animal(animalInfo[0], animalInfo[1], animalInfo[2], animalInfo[3]);
-            for(int i=0; i<zone.size(); i++){
-                if(animalInfo[3]==zone.get(i).getZoneCode()){
-                    zone.get(i).addAnimal(animal);
+            Animal animalInfoArr = new Animal(animalInfo[0], animalInfo[1], animalInfo[2], animalInfo[3]);
+            //System.out.print(this.getZone().size());
+            for (int i = 0; i < this.getZone().size(); i++) {
+                System.out.print(i);
+                if(animalInfoArr.getanimalZoneCode().equalsIgnoreCase(this.getZone().get(i).getZoneCode())) {
+                    this.zone.get(i).addAnimal(animalInfoArr);
                     break;
                 }
             }
-            return animal;
         }
         scan.close();
-        return null;
     }
 
     /**

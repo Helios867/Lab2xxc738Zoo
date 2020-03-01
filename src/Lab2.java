@@ -23,8 +23,8 @@ import java.io.IOException;
 
             // Relocate the lion, "Christian" to the "Lion" zone, it was kept
             //in the "Tiger" zone! then print updated status of the Zoo.
-            animalKingdom.relocate( "Christian", "L" );
-            animalKingdom.save();
+            //animalKingdom.relocate( "Christian", "L" );
+            //animalKingdom.save();
 
             System.out.println( animalKingdom );
         }
