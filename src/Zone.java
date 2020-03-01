@@ -24,7 +24,7 @@ public class Zone {
      * @return
      */
     public String toString(){
-        return String.format(zoneCode+" : "+zoneName+" ("+safetyRating+"):\n ----------------------------\n"+animal);
+        return String.format(zoneCode+" : "+zoneName+" ("+safetyRating+"):\n ----------------------------\n"+animal+"\n");
     }
 
     /**

@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -80,14 +77,15 @@ public class Zoo {
         int newZone = 0;
         for(int i = 0; i < this.zone.size(); i++){
             Zone temp = this.zone.get(i);
-            if(temp.getZoneCode() == zoneCode){
+            if(temp.getZoneCode().equals(zoneCode)){
                 newZone = i;
             }
             for(int j = 0; j < temp.getAnimal().size(); j++){
                 Animal ani = temp.getAnimal().get(j);
-                if(ani.getAnimalName() == animalName){
+                if(ani.getAnimalName().equals(animalName)){
                     found = ani;
                     aniZone = i;
+                    ani.setAnimalZoneCode(zoneCode);
                     break;
                 }
             }
@@ -95,6 +93,7 @@ public class Zoo {
         if(found != null){
             this.zone.get(aniZone).removeAnimal(found);
             this.zone.get(newZone).addAnimal(found);
+
         }
     }
 
@@ -104,15 +103,17 @@ public class Zoo {
      * can erase what was there before the save
      */
     public void save() throws IOException {
-        File saveZoneFile = new File("animalData/zones.csv");
-        File saveAnimalFile = new File("animalData/animals.csv");
+        Writer fwa = new FileWriter("animalData/animals.csv", false);
         for(int i=0; i<zone.size(); i++){
-            FileWriter fwz = new FileWriter(saveZoneFile, false);
-
+            //FileWriter fwz = new FileWriter(saveZoneFile, false);
             for(int j=0; j<zone.get(i).getAnimal().size(); j++){
-                FileWriter fwa = new FileWriter(saveAnimalFile, false);
+                fwa.write(zone.get(i).getAnimal().get(j).getAnimalName()+",");
+                fwa.write(zone.get(i).getAnimal().get(j).getAnimalType()+",");
+                fwa.write(zone.get(i).getAnimal().get(j).getCarnivore()+",");
+                fwa.write(zone.get(i).getAnimal().get(j).getanimalZoneCode()+"\n");
             }
         }
+        fwa.close();
 
     }
 

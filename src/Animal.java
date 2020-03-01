@@ -24,7 +24,7 @@ public class Animal {
      * @return
      */
     public String toString(){
-        return String.format(">> "+animalName+" - "+animalType+" ("+carnivore+" )");
+        return String.format(">> "+animalName+" - "+animalType+" ("+carnivore+" )\n");
     }
 
     public String getAnimalName(){
